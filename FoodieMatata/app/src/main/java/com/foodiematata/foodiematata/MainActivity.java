@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,13 +15,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // all activity interactions with viewModel only
-    private com.foodiematata.foodiematata.WordViewModel mWordViewModel;
+    private RestaurantViewModel mRestaurantViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
@@ -32,29 +29,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, com.foodiematata.foodiematata.NewWordActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, com.foodiematata.foodiematata.NewWordActivity.class);
+//                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+//            }
+//        });
 
         // RecyclerView setup
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final com.foodiematata.foodiematata.WordListAdapter adapter = new WordListAdapter(this);
+        final RestaurantListAdapter adapter = new RestaurantListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // ViewModel and liveData code
         // ViewModelProviders are used to associate viewModel with UI controller
-        mWordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
-        mWordViewModel.getAllWords().observe(this, new Observer<List<com.foodiematata.foodiematata.Word>>() {
+        mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
+        mRestaurantViewModel.getAllWords().observe(this, new Observer<List<Restaurant>>() {
             @Override
-            public void onChanged(List<com.foodiematata.foodiematata.Word> words) {
+            public void onChanged(List<Restaurant> restaurants) {
                 // update cached copy of words
-                adapter.setWords(words);
+                adapter.setWords(restaurants);
             }
         });
 
@@ -68,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                com.foodiematata.foodiematata.Word myWord = adapter.getWordAtPosition(position);
+                Restaurant restaurant = adapter.getWordAtPosition(position);
                 Toast.makeText(MainActivity.this, "Deleting...", Toast.LENGTH_LONG).show();
-                mWordViewModel.deleteWord(myWord);
+                mRestaurantViewModel.deleteWord(restaurant);
             }
         });
         helper.attachToRecyclerView(recyclerView);
@@ -89,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.clear_data) {
             Toast.makeText(this, "Clearing the data...", Toast.LENGTH_SHORT).show();
-            mWordViewModel.deleteAll();
+            mRestaurantViewModel.deleteAll();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -98,8 +95,12 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            com.foodiematata.foodiematata.Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
-            mWordViewModel.insert(word);
+            String name = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_NAME);
+            String description = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_DESCRIPTION);
+            String location = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_LOCATION);
+            String phone = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_PHONE);
+            Restaurant restaurant = new Restaurant(name, description, location, phone, null, null);
+            mRestaurantViewModel.insert(restaurant);
         } else {
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
         }

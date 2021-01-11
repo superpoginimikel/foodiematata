@@ -11,37 +11,37 @@ import java.util.List;
 * ViewModel provides data to the UI and survives configuration changes
 * Note - never pass context into ViewModel instances; Never store Activity/Fragment/View instances or context in ViewModel
 * */
-public class WordViewModel extends AndroidViewModel {
+public class RestaurantViewModel extends AndroidViewModel {
 
-    private com.foodiematata.foodiematata.WordRepository mRepository;
-    private LiveData<List<com.foodiematata.foodiematata.Word>> mAllWords;
+    private RestaurantRepository mRepository;
+    private LiveData<List<Restaurant>> restaurants;
 
     /*
     * constructor; gets reference to WordRepository and gets list of all words from the repository
     * */
-    public WordViewModel(@NonNull Application application) {
+    public RestaurantViewModel(@NonNull Application application) {
         super(application);
-        mRepository = new WordRepository(application);
-        mAllWords = mRepository.getAllWords();
+        mRepository = new RestaurantRepository(application);
+        restaurants = mRepository.getAllWords();
     }
 
     /*
     * "getter" methods to get all the words from the repository and insert words into the database;
     *This hides implementation from the UI
     * */
-    LiveData<List<com.foodiematata.foodiematata.Word>> getAllWords() {
-        return mAllWords;
+    LiveData<List<Restaurant>> getAllWords() {
+        return restaurants;
     }
 
-    public void insert(com.foodiematata.foodiematata.Word word) {
-        mRepository.insert(word);
+    public void insert(Restaurant restaurant) {
+        mRepository.insert(restaurant);
     }
 
     public void deleteAll(){
         mRepository.deleteAll();
     }
 
-    public void deleteWord(Word word) {
-        mRepository.deleteWord(word);
+    public void deleteWord(Restaurant restaurant) {
+        mRepository.deleteWord(restaurant);
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorScreenBackground"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/restaurantNameTextView"
+        style="@style/label_view_style"
+        android:text="Restaurant Name:" />
+
+    <EditText
+        android:id="@+id/edit_restaurant_name"
+        style="@style/text_view_style"
+        android:inputType="textAutoComplete" />
+
+    <TextView
+        android:id="@+id/restaurantDescriptionTextView"
+        style="@style/label_view_style"
+        android:text="Restaurant Description:" />
+
+    <EditText
+        android:id="@+id/edit_restaurant_description"
+        style="@style/text_view_style"
+        android:inputType="textAutoComplete" />
+
+    <TextView
+        android:id="@+id/restaurantLocationTextView"
+        style="@style/label_view_style"
+        android:text="Restaurant Location:" />
+
+    <EditText
+        android:id="@+id/edit_restaurant_location"
+        style="@style/text_view_style"
+        android:inputType="textAutoComplete" />
+
+    <TextView
+        android:id="@+id/restaurantPhoneTextView"
+        style="@style/label_view_style"
+        android:text="Restaurant Location:" />
+
+    <EditText
+        android:id="@+id/edit_restaurant_phone"
+        style="@style/text_view_style"
+        android:inputType="textAutoComplete" />
+
+    <Button
+        android:id="@+id/button_save"
+        style="@style/button_style"
+        android:onClick="saveWord"
+        android:text="@string/button_save" />
+</LinearLayout>

@@ -20,23 +20,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * @Database annotation tells that this is a room database; it consists of only one entity(word.class);
  * version number is 1; export schema keeps history of schema versions (disabled because database migration not needed)
  * */
-@Database(entities = {com.foodiematata.foodiematata.Word.class}, version = 1, exportSchema = false)
-public abstract class WordRoomDatabase extends RoomDatabase {
+@Database(entities = {Restaurant.class}, version = 1, exportSchema = false)
+public abstract class RestaurantRoomDatabase extends RoomDatabase {
 
     /*
      * all the DAOs that work with the database come here;
      * Here, wordDao() works like a 'getter' for the DAO
      * */
-    public abstract com.foodiematata.foodiematata.WordDao wordDao();
+    public abstract RestaurantDao restaurantDao();
 
     /*
      * Making the database singleton so that there is only one instance of Room database.
      * */
-    private static WordRoomDatabase INSTANCE;
+    private static RestaurantRoomDatabase INSTANCE;
 
-    public static WordRoomDatabase getDatabase(final Context context) {
+    public static RestaurantRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (WordRoomDatabase.class) {
+            synchronized (RestaurantRoomDatabase.class) {
                 if (INSTANCE == null) {
                     // database creation goes here
 
@@ -45,7 +45,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
                      * It uses destructive database migration (if database schema is changed, destroy and recreate database)
                      * Destructive migration is not preferred in real world apps
                      * */
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), WordRoomDatabase.class, "word_database")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RestaurantRoomDatabase.class, "restaurant_database")
                             .fallbackToDestructiveMigration()
                             .addCallback(sRoomDatabaseCallback)
                             .build();
@@ -69,21 +69,22 @@ public abstract class WordRoomDatabase extends RoomDatabase {
      * */
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final WordDao mDao;
-        String[] words = {"dolphin", "crocodile", "cobra"};
+        private final RestaurantDao mDao;
+        // Change this to restaurant hardcode values
+//        String[] words = {"dolphin", "crocodile", "cobra"};
 
-        PopulateDbAsync(WordRoomDatabase db) {
-            mDao = db.wordDao();
+        PopulateDbAsync(RestaurantRoomDatabase db) {
+            mDao = db.restaurantDao();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            if (mDao.getAnyWord().length < 1) {
-                for (int i = 0; i <= words.length - 1; i++) {
-                    com.foodiematata.foodiematata.Word word = new Word(words[i]);
-                    mDao.insert(word);
-                }
-            }
+//            if (mDao.getAnyWord().length < 1) {
+//                for (int i = 0; i <= words.length - 1; i++) {
+//                    Restaurant restaurant = new Restaurant(words[i]);
+//                    mDao.insert(word);
+//                }
+//            }
             return null;
         }
     }

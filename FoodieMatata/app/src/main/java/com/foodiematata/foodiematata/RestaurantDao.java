@@ -6,7 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import com.foodiematata.foodiematata.Word;
+import com.foodiematata.foodiematata.Restaurant;
 
 import java.util.List;
 
@@ -20,35 +20,34 @@ import java.util.List;
 * @Dao annotation used to tell Room that this is DAO class
 * */
 @Dao
-public interface WordDao {
+public interface RestaurantDao {
 
     /*
     * method to insert one word
     * */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(com.foodiematata.foodiematata.Word word);
+    void insert(Restaurant restaurant);
 
     /*
     * method to delete all items from the table; since there is no generic method, a query has to be made
     * */
-    @Query("DELETE FROM word_table")
+    @Query("DELETE FROM restaurant_table")
     void deleteAll();
 
     /*
     * get all the words from the table in List object
     * LiveData is used for data observation and making app responsive to data changes
     * */
-    @Query("SELECT * FROM word_table ORDER BY word ASC")
-    LiveData<List<com.foodiematata.foodiematata.Word>> getAllWords();
+    @Query("SELECT * FROM restaurant_table ORDER BY name ASC")
+    LiveData<List<Restaurant>> getAllWords();
 
     /*
     * get single word
     * */
-    @Query("SELECT * FROM word_table LIMIT 1")
-    com.foodiematata.foodiematata.Word[] getAnyWord();
+    @Query("SELECT * FROM restaurant_table LIMIT 1")
+    Restaurant[] getAnyWord();
 
     // delete single word
     @Delete
-    void deleteWord(com.foodiematata.foodiematata.Word word);
-
+    void deleteWord(Restaurant restaurant);
 }
