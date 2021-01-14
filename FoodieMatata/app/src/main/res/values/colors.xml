@@ -4,7 +4,8 @@
     <color name="colorPrimaryLight">#64b5f6</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FFFF9800</color>
-    <color name="colorTextPrimary">@android:color/white</color>
+    <color name="colorTextPrimary">#444444</color>
+    <color name="colorButtonTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#FFFFFF</color>
     <color name="colorTextHint">#E0E0E0</color>
     <color name="colorTextLabel">#444444</color>

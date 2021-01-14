@@ -5,4 +5,11 @@
     <string name="empty_not_saved">Restaurant not saved because it is empty.</string>
     <string name="clear_all_data">Clear all data</string>
     <string name="restaurant_image">Restaurant Image</string>
+    <string name="new_restaurant">New Restaurant</string>
+    <string name="restaurant_price_range">Restaurant Price Range:</string>
+    <string name="restaurant_phone">Restaurant Phone:</string>
+    <string name="restaurant_location">Restaurant Location:</string>
+    <string name="restaurant_description">Restaurant Description:</string>
+    <string name="restaurant_name">Restaurant Name:</string>
+    <string name="upload_restaurant_image">Upload Restaurant Image: (Recommended size 100px x 100px)</string>
 </resources>

@@ -71,7 +71,10 @@ public abstract class RestaurantRoomDatabase extends RoomDatabase {
 
         private final RestaurantDao mDao;
         // Change this to restaurant hardcode values
-//        String[] words = {"dolphin", "crocodile", "cobra"};
+        Restaurant[] restaurants = {
+                new Restaurant("Restaurant1", "Description1", "Location1", "12345678", "10-20", "null", null, null),
+                new Restaurant("Restaurant2", "Description2", "Location2", "12345678", "20-40", "null", null, null)
+        };
 
         PopulateDbAsync(RestaurantRoomDatabase db) {
             mDao = db.restaurantDao();
@@ -79,12 +82,12 @@ public abstract class RestaurantRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-//            if (mDao.getAnyWord().length < 1) {
-//                for (int i = 0; i <= words.length - 1; i++) {
-//                    Restaurant restaurant = new Restaurant(words[i]);
-//                    mDao.insert(word);
-//                }
-//            }
+            if (mDao.getAnyRestaurant().length < 1) {
+                for (int i = 0; i <= restaurants.length - 1; i++) {
+                    Restaurant restaurant = restaurants[i];
+                    mDao.insert(restaurant);
+                }
+            }
             return null;
         }
     }

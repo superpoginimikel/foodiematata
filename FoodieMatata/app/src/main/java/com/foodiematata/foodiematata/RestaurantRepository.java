@@ -21,7 +21,7 @@ public class RestaurantRepository {
     RestaurantRepository(Application application){
         RestaurantRoomDatabase db = RestaurantRoomDatabase.getDatabase(application);
         restaurantDao = db.restaurantDao();
-        restaurants = restaurantDao.getAllWords();
+        restaurants = restaurantDao.getAllRestaurants();
     }
 
     /*
@@ -87,7 +87,7 @@ public class RestaurantRepository {
 
         @Override
         protected Void doInBackground(final Restaurant... params) {
-            mAsyncTaskDao.deleteWord(params[0]);
+            mAsyncTaskDao.deleteRestaurant(params[0]);
             return null;
         }
     }

@@ -55,22 +55,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // swiping delete functionality implemented here
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                Restaurant restaurant = adapter.getWordAtPosition(position);
-                Toast.makeText(MainActivity.this, "Deleting...", Toast.LENGTH_LONG).show();
-                mRestaurantViewModel.deleteWord(restaurant);
-            }
-        });
-        helper.attachToRecyclerView(recyclerView);
+//        // swiping delete functionality implemented here
+//        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                int position = viewHolder.getAdapterPosition();
+//                Restaurant restaurant = adapter.getWordAtPosition(position);
+//                Toast.makeText(MainActivity.this, "Deleting...", Toast.LENGTH_LONG).show();
+//                mRestaurantViewModel.deleteWord(restaurant);
+//            }
+//        });
+//        helper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -84,9 +84,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.clear_data) {
+        if (id == R.id.clear_data)
+        {
             Toast.makeText(this, "Clearing the data...", Toast.LENGTH_SHORT).show();
             mRestaurantViewModel.deleteAll();
+            return true;
+        }
+        else if (id == R.id.new_restaurant)
+        {
+            Intent intent = new Intent(MainActivity.this, com.foodiematata.foodiematata.NewRestaurantActivity.class);
+            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -99,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
             String description = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_DESCRIPTION);
             String location = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_LOCATION);
             String phone = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_PHONE);
-            Restaurant restaurant = new Restaurant(name, description, location, phone, null, null);
+            String price = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_PRICE);
+            byte[] image = data.getByteArrayExtra(NewRestaurantActivity.EXTRA_REPLY_IMAGE);
+            Restaurant restaurant = new Restaurant(name, description, location, phone, price, null, null, image);
             mRestaurantViewModel.insert(restaurant);
         } else {
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();

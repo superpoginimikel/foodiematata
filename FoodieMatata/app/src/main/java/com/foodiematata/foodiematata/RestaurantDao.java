@@ -39,15 +39,15 @@ public interface RestaurantDao {
     * LiveData is used for data observation and making app responsive to data changes
     * */
     @Query("SELECT * FROM restaurant_table ORDER BY name ASC")
-    LiveData<List<Restaurant>> getAllWords();
+    LiveData<List<Restaurant>> getAllRestaurants();
 
     /*
     * get single word
     * */
     @Query("SELECT * FROM restaurant_table LIMIT 1")
-    Restaurant[] getAnyWord();
+    Restaurant[] getAnyRestaurant();
 
     // delete single word
     @Delete
-    void deleteWord(Restaurant restaurant);
+    void deleteRestaurant(Restaurant restaurant);
 }

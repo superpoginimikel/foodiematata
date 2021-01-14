@@ -25,13 +25,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/restoTitle"
+            android:id="@+id/restoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="placeholder text" />
 
         <TextView
-            android:id="@+id/restoCategory"
+            android:id="@+id/restoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/restoLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/restoPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="placeholder text" />

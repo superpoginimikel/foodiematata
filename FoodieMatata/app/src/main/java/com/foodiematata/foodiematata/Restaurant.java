@@ -35,6 +35,10 @@ public class Restaurant {
     @ColumnInfo(name = "phone")
     private String phone;
 
+    // Update this to enum (wanna use preset price range)
+    @ColumnInfo(name = "price")
+    private String price;
+
     // Update this to enum
     @ColumnInfo(name = "category")
     private String category;
@@ -42,18 +46,23 @@ public class Restaurant {
     @ColumnInfo(name = "ratingsId")
     private String ratingsId;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
+
     /*
     * public constructor
     * */
-
     public Restaurant(@NonNull String name, @NonNull String description, @NonNull String location,
-                      @NonNull String phone, String category, String ratingsId) {
+                      @NonNull String phone, @NonNull String price, String category, String ratingsId,
+                      byte[] image) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.phone = phone;
+        this.price = price;
         this.category = category;
         this.ratingsId = ratingsId;
+        this.image = image;
     }
 
     /*
@@ -71,10 +80,16 @@ public class Restaurant {
     public String getPhone() {
         return this.phone;
     }
+    public String getPrice() {
+        return this.price;
+    }
     public String getCategory() {
         return this.category;
     }
     public String getRatingsId() {
         return this.ratingsId;
+    }
+    public byte[] getImage() {
+        return this.image;
     }
 }

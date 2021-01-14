@@ -1,7 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="me.mahakagg.roomwordssamplev2.MainActivity">
+    tools:context="com.foodiematata.foodiematata.MainActivity">
+    <item
+        android:id="@+id/new_restaurant"
+        android:orderInCategory="99"
+        android:title="@string/new_restaurant"
+        app:showAsAction="never" />
     <item
         android:id="@+id/clear_data"
         android:orderInCategory="100"

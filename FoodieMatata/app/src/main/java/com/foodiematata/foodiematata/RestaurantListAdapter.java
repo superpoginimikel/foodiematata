@@ -1,6 +1,8 @@
 package com.foodiematata.foodiematata;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,22 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         if (restaurants != null){
             Restaurant current = restaurants.get(position);
-//            holder.wordItemView.setText(current.getRestaurantName());
+            holder.restoName.setText((current.getName()));
+            holder.restoDescription.setText((current.getDescription()));
+            holder.restoLocation.setText((current.getLocation()));
+            holder.restoPrice.setText((current.getPrice()));
+            holder.restoPhone.setText((current.getPhone()));
+
+            byte[] imageByte = current.getImage();
+            if (imageByte != null)
+            {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+                holder.restoImageView.setImageBitmap(bitmap);
+            }
+            else
+            {
+                // Show a placeholder image to add
+            }
         }
         else{
 //            holder.wordItemView.setText("No restaurant found");
@@ -75,16 +92,20 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     * */
     class RestaurantViewHolder extends RecyclerView.ViewHolder {
         private final ImageView restoImageView;
-        private final TextView restoTitle;
-        private final TextView restoCategory;
+        private final TextView restoName;
+        private final TextView restoDescription;
+        private final TextView restoLocation;
+        private final TextView restoPhone;
         private final TextView restoPrice;
 
         private RestaurantViewHolder(View itemView) {
             super(itemView);
-            restoTitle = itemView.findViewById(R.id.restoTitle);
-            restoCategory = itemView.findViewById(R.id.restoCategory);
-            restoImageView = itemView.findViewById(R.id.restoImageView);
+            restoName = itemView.findViewById(R.id.restoName);
+            restoDescription = itemView.findViewById(R.id.restoDescription);
+            restoLocation = itemView.findViewById(R.id.restoLocation);
+            restoPhone = itemView.findViewById(R.id.restoPhone);
             restoPrice = itemView.findViewById(R.id.restoPrice);
+            restoImageView = itemView.findViewById(R.id.restoImageView);
         }
     }
 }

@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorScreenBackground"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/restaurantImageTextView"
+        style="@style/label_view_style"
+        android:text="@string/upload_restaurant_image" />
+
+    <ImageView
+        android:id="@+id/restaurantImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:onClick="AddRestaurantImage"/>
+
+    <TextView
         android:id="@+id/restaurantNameTextView"
         style="@style/label_view_style"
-        android:text="Restaurant Name:" />
+        android:text="@string/restaurant_name" />
 
     <EditText
         android:id="@+id/edit_restaurant_name"
@@ -19,7 +41,7 @@
     <TextView
         android:id="@+id/restaurantDescriptionTextView"
         style="@style/label_view_style"
-        android:text="Restaurant Description:" />
+        android:text="@string/restaurant_description" />
 
     <EditText
         android:id="@+id/edit_restaurant_description"
@@ -29,7 +51,7 @@
     <TextView
         android:id="@+id/restaurantLocationTextView"
         style="@style/label_view_style"
-        android:text="Restaurant Location:" />
+        android:text="@string/restaurant_location" />
 
     <EditText
         android:id="@+id/edit_restaurant_location"
@@ -39,16 +61,28 @@
     <TextView
         android:id="@+id/restaurantPhoneTextView"
         style="@style/label_view_style"
-        android:text="Restaurant Location:" />
+        android:text="@string/restaurant_phone" />
 
     <EditText
         android:id="@+id/edit_restaurant_phone"
+        style="@style/text_view_style"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/restaurantPriceTextView"
+        style="@style/label_view_style"
+        android:text="@string/restaurant_price_range" />
+
+    <EditText
+        android:id="@+id/edit_restaurant_price"
         style="@style/text_view_style"
         android:inputType="textAutoComplete" />
 
     <Button
         android:id="@+id/button_save"
         style="@style/button_style"
-        android:onClick="saveWord"
+        android:onClick="saveRestaurant"
         android:text="@string/button_save" />
 </LinearLayout>
+</ScrollView>
