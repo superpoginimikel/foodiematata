@@ -27,8 +27,12 @@ public class RestaurantRepository {
     /*
     * wrapper method that returns cached words as liveData objects so they can be observed
     * */
-    LiveData<List<Restaurant>> getAllWords() {
+    LiveData<List<Restaurant>> getAllRestaurants() {
         return restaurants;
+    }
+
+    public Restaurant getRestaurantById(int id) {
+        return restaurantDao.getRestaurantById(id);
     }
 
     /*
@@ -53,8 +57,8 @@ public class RestaurantRepository {
 
         private RestaurantDao mAsyncTaskDao;
 
-        insertAsyncTask(RestaurantDao wordDao) {
-            mAsyncTaskDao = wordDao;
+        insertAsyncTask(RestaurantDao restaurantDao) {
+            mAsyncTaskDao = restaurantDao;
         }
 
         @Override

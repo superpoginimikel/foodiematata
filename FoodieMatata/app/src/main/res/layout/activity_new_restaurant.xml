@@ -41,10 +41,10 @@
     <TextView
         android:id="@+id/restaurantDescriptionTextView"
         style="@style/label_view_style"
-        android:text="@string/restaurant_description" />
+        android:text="@string/restaurant_food_category" />
 
     <EditText
-        android:id="@+id/edit_restaurant_description"
+        android:id="@+id/edit_restaurant_category"
         style="@style/text_view_style"
         android:inputType="textAutoComplete" />
 

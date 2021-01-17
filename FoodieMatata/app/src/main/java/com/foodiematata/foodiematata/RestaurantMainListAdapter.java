@@ -1,6 +1,7 @@
 package com.foodiematata.foodiematata;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -21,38 +22,51 @@ import java.util.List;
 /*
 * Adapter is used to connect data to view items
 * */
-public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
+public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMainListAdapter.RestaurantViewHolder> {
+
+    public static final String EXTRA_REPLY_RESTAURANT_ID = "com.foodiematata.foodiematata.REPLY_RESTURANT_ID";
 
     private final LayoutInflater mInflater;
+    private final Context mContext;
     private List<Restaurant> restaurants;
 
-    RestaurantListAdapter(Context context) {
+    RestaurantMainListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        this.mContext = context;
     }
 
     // inflate a view item and return the viewHolder containing it
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.restaurant_main_list_item, parent, false);
         return new RestaurantViewHolder(itemView);
     }
 
     // set content of view item at a certain position
     @Override
-    public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RestaurantViewHolder holder, final int position) {
         if (restaurants != null){
-            Restaurant current = restaurants.get(position);
+            final Restaurant current = restaurants.get(position);
             holder.restoName.setText((current.getName()));
-            holder.restoDescription.setText((current.getDescription()));
+            holder.restoCategory.setText((current.getCategory()));
             holder.restoLocation.setText((current.getLocation()));
             holder.restoPrice.setText((current.getPrice()));
-            holder.restoPhone.setText((current.getPhone()));
 
-            byte[] imageByte = current.getImage();
-            if (imageByte != null)
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent infoIntent = new Intent(mContext, RestaurantInfo.class);
+                    infoIntent.putExtra(EXTRA_REPLY_RESTAURANT_ID, current.getId());
+                    mContext.startActivity(infoIntent);
+//                    Toast.makeText(mContext, "Recycle Click" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            String imagePath = current.getImagePath();
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            if (bitmap != null)
             {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
                 holder.restoImageView.setImageBitmap(bitmap);
             }
             else
@@ -66,7 +80,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     }
 
     //
-    void setWords(List<Restaurant> restaurants){
+    void setRestaurant(List<Restaurant> restaurants){
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }
@@ -93,17 +107,15 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     class RestaurantViewHolder extends RecyclerView.ViewHolder {
         private final ImageView restoImageView;
         private final TextView restoName;
-        private final TextView restoDescription;
+        private final TextView restoCategory;
         private final TextView restoLocation;
-        private final TextView restoPhone;
         private final TextView restoPrice;
 
         private RestaurantViewHolder(View itemView) {
             super(itemView);
             restoName = itemView.findViewById(R.id.restoName);
-            restoDescription = itemView.findViewById(R.id.restoDescription);
+            restoCategory = itemView.findViewById(R.id.restoCategory);
             restoLocation = itemView.findViewById(R.id.restoLocation);
-            restoPhone = itemView.findViewById(R.id.restoPhone);
             restoPrice = itemView.findViewById(R.id.restoPrice);
             restoImageView = itemView.findViewById(R.id.restoImageView);
         }

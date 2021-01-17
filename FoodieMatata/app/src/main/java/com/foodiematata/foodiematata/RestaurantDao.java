@@ -41,6 +41,9 @@ public interface RestaurantDao {
     @Query("SELECT * FROM restaurant_table ORDER BY name ASC")
     LiveData<List<Restaurant>> getAllRestaurants();
 
+    @Query("SELECT * FROM restaurant_table where id == :id  ORDER BY name ASC")
+    Restaurant getRestaurantById(int id);
+
     /*
     * get single word
     * */

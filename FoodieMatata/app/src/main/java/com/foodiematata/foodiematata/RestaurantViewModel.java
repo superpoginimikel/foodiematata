@@ -22,15 +22,19 @@ public class RestaurantViewModel extends AndroidViewModel {
     public RestaurantViewModel(@NonNull Application application) {
         super(application);
         mRepository = new RestaurantRepository(application);
-        restaurants = mRepository.getAllWords();
+        restaurants = mRepository.getAllRestaurants();
     }
 
     /*
     * "getter" methods to get all the words from the repository and insert words into the database;
     *This hides implementation from the UI
     * */
-    LiveData<List<Restaurant>> getAllWords() {
+    LiveData<List<Restaurant>> getAllRestaurants() {
         return restaurants;
+    }
+
+    public Restaurant getRestaurantById(int id)  {
+        return mRepository.getRestaurantById(id);
     }
 
     public void insert(Restaurant restaurant) {

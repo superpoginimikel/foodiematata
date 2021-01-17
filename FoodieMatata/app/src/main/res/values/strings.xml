@@ -9,7 +9,17 @@
     <string name="restaurant_price_range">Restaurant Price Range:</string>
     <string name="restaurant_phone">Restaurant Phone:</string>
     <string name="restaurant_location">Restaurant Location:</string>
-    <string name="restaurant_description">Restaurant Description:</string>
+    <string name="restaurant_food_category">Restaurant Food Category:</string>
     <string name="restaurant_name">Restaurant Name:</string>
-    <string name="upload_restaurant_image">Upload Restaurant Image: (Recommended size 100px x 100px)</string>
+    <string name="upload_restaurant_image">Upload Restaurant Image:</string>
+    <string name="view_more_photos">View More Photos</string>
+    <string name="title_activity_restaurant_info">RestaurantInfo</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

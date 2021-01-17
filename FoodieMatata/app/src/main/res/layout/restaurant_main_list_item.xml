@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:orientation="vertical">
+    android:clickable="true"
+    android:focusable="true" >
 
     <ImageView
         android:id="@+id/restoImageView"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_margin="8dp"
         android:contentDescription="@string/restaurant_image"
         tools:srcCompat="@tools:sample/avatars" />
@@ -28,31 +29,28 @@
             android:id="@+id/restoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="placeholder text" />
+            style="@style/label_title_view_style"
+            tools:text="Restaurant name" />
+
+        <!-- Add special awards here, maybe image? -->
 
         <TextView
-            android:id="@+id/restoDescription"
+            android:id="@+id/restoCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="placeholder text" />
-
-        <TextView
-            android:id="@+id/restoLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="placeholder text" />
-
-        <TextView
-            android:id="@+id/restoPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="placeholder text" />
+            tools:text="Food Category" />
 
         <TextView
             android:id="@+id/restoPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="placeholder text" />
+            tools:text="Price Range" />
+
+        <TextView
+            android:id="@+id/restoLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Location" />
     </LinearLayout>
 
 

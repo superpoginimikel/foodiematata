@@ -17,17 +17,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "restaurant_table")
 public class Restaurant {
 
-    /*
-    * String mWord acts as the primary key in the table and the value can never be null
-    * Column name is specified as it is different from the variable name
-    * */
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "name")
     private String name;
-
-    @ColumnInfo(name = "description")
-    private String description;
 
     @ColumnInfo(name = "location")
     private String location;
@@ -46,33 +41,36 @@ public class Restaurant {
     @ColumnInfo(name = "ratingsId")
     private String ratingsId;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] image;
+    @ColumnInfo(name = "imagePath")
+    private String imagePath;
 
     /*
     * public constructor
     * */
-    public Restaurant(@NonNull String name, @NonNull String description, @NonNull String location,
+    public Restaurant(@NonNull String name, @NonNull String location,
                       @NonNull String phone, @NonNull String price, String category, String ratingsId,
-                      byte[] image) {
+                      String imagePath) {
         this.name = name;
-        this.description = description;
         this.location = location;
         this.phone = phone;
         this.price = price;
         this.category = category;
         this.ratingsId = ratingsId;
-        this.image = image;
+        this.imagePath = imagePath;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /*
     * getter for member variable
     * */
+    public int getId() {
+        return this.id;
+    }
     public String getName() {
         return this.name;
-    }
-    public String getDescription() {
-        return this.description;
     }
     public String getLocation() {
         return this.location;
@@ -89,7 +87,5 @@ public class Restaurant {
     public String getRatingsId() {
         return this.ratingsId;
     }
-    public byte[] getImage() {
-        return this.image;
-    }
+    public String getImagePath() { return this.imagePath; }
 }

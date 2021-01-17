@@ -47,49 +47,11 @@ public abstract class RestaurantRoomDatabase extends RoomDatabase {
                      * */
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RestaurantRoomDatabase.class, "restaurant_database")
                             .fallbackToDestructiveMigration()
-                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
         }
         return INSTANCE;
-    }
-
-    // run asyncTask whenever app is opened
-    private static Callback sRoomDatabaseCallback = new Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-            new PopulateDbAsync(INSTANCE).execute();
-        }
-    };
-
-    /*
-     * asyncTask to delete all existing entries and repopulating the database with the contents of string array
-     * */
-    private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
-
-        private final RestaurantDao mDao;
-        // Change this to restaurant hardcode values
-        Restaurant[] restaurants = {
-                new Restaurant("Restaurant1", "Description1", "Location1", "12345678", "10-20", "null", null, null),
-                new Restaurant("Restaurant2", "Description2", "Location2", "12345678", "20-40", "null", null, null)
-        };
-
-        PopulateDbAsync(RestaurantRoomDatabase db) {
-            mDao = db.restaurantDao();
-        }
-
-        @Override
-        protected Void doInBackground(final Void... params) {
-            if (mDao.getAnyRestaurant().length < 1) {
-                for (int i = 0; i <= restaurants.length - 1; i++) {
-                    Restaurant restaurant = restaurants[i];
-                    mDao.insert(restaurant);
-                }
-            }
-            return null;
-        }
     }
 }
 

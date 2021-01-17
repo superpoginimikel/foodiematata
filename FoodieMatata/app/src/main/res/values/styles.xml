@@ -17,12 +17,29 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="label_title_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Medium</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/colorTextLabel</item>
+    </style>
+
     <style name="label_view_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Small</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textColor">@color/colorTextLabel</item>
+    </style>
+
+    <style name="label_clickable_view_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Medium</item>
+<!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/colorTextClickableLabel</item>
     </style>
 
     <style name="text_view_style">
