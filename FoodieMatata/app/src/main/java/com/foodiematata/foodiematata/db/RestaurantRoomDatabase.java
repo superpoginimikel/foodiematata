@@ -1,13 +1,13 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.db;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import androidx.annotation.NonNull;
+import com.foodiematata.foodiematata.db.dao.RestaurantDao;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /*
  * Room database child class; this class is a layer on SQLiteDatabase;

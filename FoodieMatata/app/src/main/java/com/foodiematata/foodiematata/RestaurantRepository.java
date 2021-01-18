@@ -4,6 +4,10 @@ package com.foodiematata.foodiematata;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.foodiematata.foodiematata.db.RestaurantRoomDatabase;
+import com.foodiematata.foodiematata.db.dao.RestaurantDao;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
+
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -18,7 +22,7 @@ public class RestaurantRepository {
     /*
     * constructor to get handle to the database and initialize member variables
     * */
-    RestaurantRepository(Application application){
+    public RestaurantRepository(Application application){
         RestaurantRoomDatabase db = RestaurantRoomDatabase.getDatabase(application);
         restaurantDao = db.restaurantDao();
         restaurants = restaurantDao.getAllRestaurants();
@@ -27,7 +31,7 @@ public class RestaurantRepository {
     /*
     * wrapper method that returns cached words as liveData objects so they can be observed
     * */
-    LiveData<List<Restaurant>> getAllRestaurants() {
+    public LiveData<List<Restaurant>> getAllRestaurants() {
         return restaurants;
     }
 

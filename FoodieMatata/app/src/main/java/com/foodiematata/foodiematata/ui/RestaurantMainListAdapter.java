@@ -1,4 +1,4 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.foodiematata.foodiematata.R;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +33,7 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
     private final Context mContext;
     private List<Restaurant> restaurants;
 
-    RestaurantMainListAdapter(Context context) {
+    public RestaurantMainListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
     }
@@ -56,7 +59,7 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent infoIntent = new Intent(mContext, RestaurantInfo.class);
+                    Intent infoIntent = new Intent(mContext, RestaurantInfoActivity.class);
                     infoIntent.putExtra(EXTRA_REPLY_RESTAURANT_ID, current.getId());
                     mContext.startActivity(infoIntent);
 //                    Toast.makeText(mContext, "Recycle Click" + position, Toast.LENGTH_SHORT).show();
@@ -80,7 +83,7 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
     }
 
     //
-    void setRestaurant(List<Restaurant> restaurants){
+    public void setRestaurant(List<Restaurant> restaurants){
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }

@@ -1,4 +1,4 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.db.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

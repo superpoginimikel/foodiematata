@@ -1,4 +1,4 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.ui;
 
 import android.content.Intent;
 import android.os.Build;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.foodiematata.foodiematata.R;
+import com.foodiematata.foodiematata.viewmodel.RestaurantViewModel;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.new_restaurant)
         {
-            Intent intent = new Intent(MainActivity.this, com.foodiematata.foodiematata.NewRestaurantActivity.class);
+            Intent intent = new Intent(MainActivity.this, NewRestaurantActivity.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             return true;
         }

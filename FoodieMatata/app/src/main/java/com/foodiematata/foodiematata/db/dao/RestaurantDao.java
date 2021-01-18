@@ -1,4 +1,4 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,7 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import com.foodiematata.foodiematata.Restaurant;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
 
 import java.util.List;
 

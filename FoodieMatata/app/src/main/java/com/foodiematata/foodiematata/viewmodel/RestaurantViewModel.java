@@ -1,6 +1,10 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.viewmodel;
 
 import android.app.Application;
+
+import com.foodiematata.foodiematata.RestaurantRepository;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -29,7 +33,7 @@ public class RestaurantViewModel extends AndroidViewModel {
     * "getter" methods to get all the words from the repository and insert words into the database;
     *This hides implementation from the UI
     * */
-    LiveData<List<Restaurant>> getAllRestaurants() {
+    public LiveData<List<Restaurant>> getAllRestaurants() {
         return restaurants;
     }
 

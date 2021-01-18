@@ -1,4 +1,4 @@
-package com.foodiematata.foodiematata;
+package com.foodiematata.foodiematata.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.foodiematata.foodiematata.R;
+import com.foodiematata.foodiematata.viewmodel.RestaurantViewModel;
+import com.foodiematata.foodiematata.db.entity.Restaurant;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-public class RestaurantInfo extends AppCompatActivity {
+public class RestaurantInfoActivity extends AppCompatActivity {
 
     private Restaurant restaurant;
 
