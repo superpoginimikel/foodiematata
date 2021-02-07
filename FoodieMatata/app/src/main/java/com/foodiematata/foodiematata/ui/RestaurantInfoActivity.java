@@ -4,27 +4,41 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.foodiematata.foodiematata.HelperClass;
 import com.foodiematata.foodiematata.R;
-import com.foodiematata.foodiematata.viewmodel.RestaurantViewModel;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
+import com.foodiematata.foodiematata.db.entity.RestaurantImagesEntity;
+import com.foodiematata.foodiematata.viewmodel.RestaurantInfoViewModel;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.Helper;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class RestaurantInfoActivity extends AppCompatActivity {
 
-    private Restaurant restaurant;
+    private RestaurantEntity restaurant;
+    private int restaurantId;
 
-    private RestaurantViewModel mRestaurantViewModel;
+    private RestaurantInfoViewModel mRestaurantInfoViewModel;
     private ImageView imageView;
     private TextView restoName;
     private TextView restoCategory;
     private TextView restoPrice;
     private TextView restoLocation;
     private TextView restoPhone;
+
+    // Limited images in list view
+    private ImageView imagePreview1;
+    private ImageView imagePreview2;
+    private ImageView imagePreview3;
+    private List<ImageView> imagePreviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +47,11 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         cacheViews();
 
         Intent intent = getIntent();
-        Integer restaurantId = intent.getIntExtra(RestaurantMainListAdapter.EXTRA_REPLY_RESTAURANT_ID, 0);
-        mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
-        restaurant = mRestaurantViewModel.getRestaurantById(restaurantId);
-        addValuesToView();
+        restaurantId = intent.getIntExtra(RestaurantMainListAdapter.EXTRA_REPLY_RESTAURANT_ID, 0);
+        mRestaurantInfoViewModel = ViewModelProviders.of(this).get(RestaurantInfoViewModel.class);
+        subscribeRestaurantInfo();
+        subscribeLimitedImages();
+        subscribeLimitedComments();
     }
 
     private void cacheViews()
@@ -47,25 +62,59 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         restoPrice = findViewById(R.id.restoPrice);
         restoLocation = findViewById(R.id.restoLocation);
         restoPhone = findViewById(R.id.restoPhone);
+
+        imagePreview1 = findViewById(R.id.popularDishesImage1);
+        imagePreview2 = findViewById(R.id.popularDishesImage2);
+        imagePreview3 = findViewById(R.id.popularDishesImage3);
+        imagePreviews.add(imagePreview1);
+        imagePreviews.add(imagePreview2);
+        imagePreviews.add(imagePreview3);
     }
 
-    private void addValuesToView()
+    private void subscribeRestaurantInfo()
     {
-        String imagePath = restaurant.getImagePath();
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        if (bitmap != null)
-        {
-            imageView.setImageBitmap(bitmap);
-        }
-        else
-        {
-            // Show a placeholder image to add
-        }
+        mRestaurantInfoViewModel.getRestaurantById(restaurantId).observe(this, new Observer<RestaurantEntity>() {
+            @Override
+            public void onChanged(RestaurantEntity restaurantEntity) {
+                restaurant = restaurantEntity;
 
-        restoName.setText(restaurant.getName());
-        restoCategory.setText(restaurant.getCategory());
-        restoPrice.setText(restaurant.getPrice());
-        restoLocation.setText(restaurant.getLocation());
-        restoPhone.setText(restaurant.getPhone());
+                String imagePath = restaurant.getImagePath();
+                HelperClass.setImage(imageView, imagePath);
+
+                restoName.setText(restaurant.getName());
+                restoCategory.setText(restaurant.getCategory());
+                restoPrice.setText(restaurant.getPrice());
+                restoLocation.setText(restaurant.getLocation());
+                restoPhone.setText(restaurant.getPhone());
+            }
+        });
+    }
+
+    public void viewMorePhotos(View view) {
+
+    }
+
+    private void subscribeLimitedImages() {
+        mRestaurantInfoViewModel.getLimitedImages(restaurantId).observe(this, new Observer<List<RestaurantImagesEntity>>() {
+            @Override
+            public void onChanged(List<RestaurantImagesEntity> restaurantImagesEntities) {
+                int imageCount = restaurantImagesEntities.size();
+                if (imageCount > 0)
+                {
+                    for (int ctr = 0; ctr < imageCount; imageCount++)
+                    {
+                        HelperClass.setImage(imagePreviews.get(ctr), restaurantImagesEntities.get(ctr).getImagePath());
+                    }
+                }
+                else
+                {
+                    // TODO: Set a whole view to say no images available
+                }
+            }
+        });
+    }
+
+    private void subscribeLimitedComments() {
+
     }
 }

@@ -10,4 +10,5 @@
     <color name="colorTextHint">#E0E0E0</color>
     <color name="colorTextLabel">#444444</color>
     <color name="colorTextClickableLabel">#FF5722</color>
+    <color name="colorCardBackground">#EEEEEE</color>
 </resources>

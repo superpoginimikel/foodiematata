@@ -15,41 +15,27 @@ import androidx.room.PrimaryKey;
 * table name is specified if it is different from class name
 * */
 @Entity(tableName = "restaurant_table")
-public class Restaurant {
+public class RestaurantEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @NonNull
-    @ColumnInfo(name = "name")
     private String name;
-
-    @ColumnInfo(name = "location")
     private String location;
-
-    @ColumnInfo(name = "phone")
     private String phone;
-
     // Update this to enum (wanna use preset price range)
-    @ColumnInfo(name = "price")
     private String price;
-
     // Update this to enum
-    @ColumnInfo(name = "category")
     private String category;
-
-    @ColumnInfo(name = "ratingsId")
     private String ratingsId;
-
-    @ColumnInfo(name = "imagePath")
     private String imagePath;
 
     /*
     * public constructor
     * */
-    public Restaurant(@NonNull String name, @NonNull String location,
-                      @NonNull String phone, @NonNull String price, String category, String ratingsId,
-                      String imagePath) {
+    public RestaurantEntity(@NonNull String name, @NonNull String location,
+                            @NonNull String phone, @NonNull String price, String category, String ratingsId,
+                            String imagePath) {
         this.name = name;
         this.location = location;
         this.phone = phone;

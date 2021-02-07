@@ -3,10 +3,8 @@ package com.foodiematata.foodiematata.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,15 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.foodiematata.foodiematata.HelperClass;
 import com.foodiematata.foodiematata.R;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.UUID;
 
 public class NewRestaurantActivity extends AppCompatActivity {
     public static final int PICK_IMAGE = 1;
@@ -66,7 +61,7 @@ public class NewRestaurantActivity extends AppCompatActivity {
         else
         {
             Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
-            File imageFile = saveImageFile(this);
+            File imageFile = HelperClass.saveImageFile(this);
             try (FileOutputStream out = new FileOutputStream(imageFile)) {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {
@@ -107,60 +102,12 @@ public class NewRestaurantActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
                 Uri selectedImage = data.getData();
-                Bitmap bitmap = decodeUri(selectedImage);
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                Bitmap bitmap = HelperClass.decodeUri(this, selectedImage);
                 mImageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    private File saveImageFile(Context context) {
-        final File path = new File(getFilesDir(), context.getPackageName());
-        if (!path.exists()) {
-            path.mkdir();
-        }
-
-        String randomId = UUID.randomUUID().toString().substring(0,6);
-        File file = new File(path + "/" + randomId);
-        if (!file.exists()) {
-            try {
-                new BufferedWriter(new FileWriter(file.getAbsolutePath()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return file;
-    }
-
-    private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
-
-        // Decode image size
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
-
-        // The new size we want to scale to
-        final int REQUIRED_SIZE = 100;
-
-        // Find the correct scale value. It should be the power of 2.
-        int width_tmp = o.outWidth, height_tmp = o.outHeight;
-        int scale = 1;
-        while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE
-                    || height_tmp / 2 < REQUIRED_SIZE) {
-                break;
-            }
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-
-        // Decode with inSampleSize
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
     }
 }

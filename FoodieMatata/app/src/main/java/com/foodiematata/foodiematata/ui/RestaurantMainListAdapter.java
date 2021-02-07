@@ -10,35 +10,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.foodiematata.foodiematata.HelperClass;
 import com.foodiematata.foodiematata.R;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/*
-* adapter class for recyclerView
-* */
-
-/*
-* Adapter is used to connect data to view items
-* */
 public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMainListAdapter.RestaurantViewHolder> {
 
     public static final String EXTRA_REPLY_RESTAURANT_ID = "com.foodiematata.foodiematata.REPLY_RESTURANT_ID";
 
     private final LayoutInflater mInflater;
     private final Context mContext;
-    private List<Restaurant> restaurants;
+    private List<RestaurantEntity> restaurants;
 
     public RestaurantMainListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
     }
 
-    // inflate a view item and return the viewHolder containing it
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,11 +39,10 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
         return new RestaurantViewHolder(itemView);
     }
 
-    // set content of view item at a certain position
     @Override
     public void onBindViewHolder(@NonNull final RestaurantViewHolder holder, final int position) {
         if (restaurants != null){
-            final Restaurant current = restaurants.get(position);
+            final RestaurantEntity current = restaurants.get(position);
             holder.restoName.setText((current.getName()));
             holder.restoCategory.setText((current.getCategory()));
             holder.restoLocation.setText((current.getLocation()));
@@ -62,38 +54,23 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
                     Intent infoIntent = new Intent(mContext, RestaurantInfoActivity.class);
                     infoIntent.putExtra(EXTRA_REPLY_RESTAURANT_ID, current.getId());
                     mContext.startActivity(infoIntent);
-//                    Toast.makeText(mContext, "Recycle Click" + position, Toast.LENGTH_SHORT).show();
                 }
             });
 
             String imagePath = current.getImagePath();
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            if (bitmap != null)
-            {
-                holder.restoImageView.setImageBitmap(bitmap);
-            }
-            else
-            {
-                // Show a placeholder image to add
-            }
+            HelperClass.setImage(holder.restoImageView, imagePath);
         }
-        else{
+        else {
 //            holder.wordItemView.setText("No restaurant found");
         }
     }
 
     //
-    public void setRestaurant(List<Restaurant> restaurants){
+    public void setRestaurant(List<RestaurantEntity> restaurants){
         this.restaurants = restaurants;
         notifyDataSetChanged();
     }
 
-    //get word at position
-    public Restaurant getWordAtPosition (int position) {
-        return restaurants.get(position);
-    }
-
-    // return the number of items in the RecyclerView
     @Override
     public int getItemCount() {
         if (restaurants != null) {
@@ -104,9 +81,6 @@ public class RestaurantMainListAdapter extends RecyclerView.Adapter<RestaurantMa
         }
     }
 
-    /*
-    * ViewHolder is in charge of displaying one item using the separate recyclerView layout
-    * */
     class RestaurantViewHolder extends RecyclerView.ViewHolder {
         private final ImageView restoImageView;
         private final TextView restoName;

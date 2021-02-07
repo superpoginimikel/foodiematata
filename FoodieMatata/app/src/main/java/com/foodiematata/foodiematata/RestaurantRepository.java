@@ -5,8 +5,12 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import com.foodiematata.foodiematata.db.RestaurantRoomDatabase;
+import com.foodiematata.foodiematata.db.dao.CommentDao;
 import com.foodiematata.foodiematata.db.dao.RestaurantDao;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
+import com.foodiematata.foodiematata.db.dao.RestaurantImageDao;
+import com.foodiematata.foodiematata.db.entity.CommentEntity;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
+import com.foodiematata.foodiematata.db.entity.RestaurantImagesEntity;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,8 +21,9 @@ import java.util.List;
 * */
 public class RestaurantRepository {
     private RestaurantDao restaurantDao;
-    private LiveData<List<Restaurant>> restaurants;
-
+    private RestaurantImageDao restaurantImageDao;
+    private CommentDao commentDao;
+    private LiveData<List<RestaurantEntity>> restaurants;
     /*
     * constructor to get handle to the database and initialize member variables
     * */
@@ -31,18 +36,26 @@ public class RestaurantRepository {
     /*
     * wrapper method that returns cached words as liveData objects so they can be observed
     * */
-    public LiveData<List<Restaurant>> getAllRestaurants() {
+    public LiveData<List<RestaurantEntity>> getAllRestaurants() {
         return restaurants;
     }
 
-    public Restaurant getRestaurantById(int id) {
+    public LiveData<RestaurantEntity> getRestaurantById(int id) {
         return restaurantDao.getRestaurantById(id);
+    }
+
+    public LiveData<List<RestaurantImagesEntity>> getLimitedImages(int id) {
+        return restaurantImageDao.getLimitedImages(id);
+    }
+
+    public LiveData<List<CommentEntity>> getLimitedComments(int id) {
+        return commentDao.getAllComments(id);
     }
 
     /*
     * wrapper for insert method which uses AsyncTask to run the query on a worker thread
     * */
-    public void insert(Restaurant restaurant){
+    public void insert(RestaurantEntity restaurant){
         new insertAsyncTask(restaurantDao).execute(restaurant);
     }
 
@@ -50,14 +63,10 @@ public class RestaurantRepository {
         new deleteAllWordsAsyncTask(restaurantDao).execute();
     }
 
-    public void deleteWord(Restaurant restaurant)  {
-        new deleteWordAsyncTask(restaurantDao).execute(restaurant);
-    }
-
     /*
     * AsyncTask inner class
     * */
-    private static class insertAsyncTask extends AsyncTask<Restaurant, Void, Void>{
+    private static class insertAsyncTask extends AsyncTask<RestaurantEntity, Void, Void>{
 
         private RestaurantDao mAsyncTaskDao;
 
@@ -66,7 +75,7 @@ public class RestaurantRepository {
         }
 
         @Override
-        protected Void doInBackground(final Restaurant... restaurants) {
+        protected Void doInBackground(final RestaurantEntity... restaurants) {
             mAsyncTaskDao.insert(restaurants[0]);
             return null;
         }
@@ -82,20 +91,6 @@ public class RestaurantRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             mAsyncTaskDao.deleteAll();
-            return null;
-        }
-    }
-
-    private static class deleteWordAsyncTask extends AsyncTask<Restaurant, Void, Void> {
-        private RestaurantDao mAsyncTaskDao;
-
-        deleteWordAsyncTask(RestaurantDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Restaurant... params) {
-            mAsyncTaskDao.deleteRestaurant(params[0]);
             return null;
         }
     }

@@ -76,7 +76,7 @@
                 style="@style/label_title_view_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Popular Dishes" />
+                android:text="@string/popular_dishes" />
 
             <LinearLayout
                 android:id="@+id/dishesLinearLayout"
@@ -120,7 +120,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dishesLinearLayout"
-                android:text="@string/view_more_photos" />
+                android:onClick="viewMorePhotos"
+                android:clickable="true"
+                android:text="@string/view_more_photos"
+                android:focusable="true" />
 
         </RelativeLayout>
 
@@ -134,7 +137,7 @@
                 style="@style/label_title_view_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Reviews" />
+                android:text="@string/reviews" />
 
         </RelativeLayout>
 

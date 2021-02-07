@@ -2,8 +2,10 @@ package com.foodiematata.foodiematata.db;
 
 import android.content.Context;
 
+import com.foodiematata.foodiematata.db.dao.CommentDao;
 import com.foodiematata.foodiematata.db.dao.RestaurantDao;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
+import com.foodiematata.foodiematata.db.dao.RestaurantImageDao;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -20,14 +22,12 @@ import androidx.room.RoomDatabase;
  * @Database annotation tells that this is a room database; it consists of only one entity(word.class);
  * version number is 1; export schema keeps history of schema versions (disabled because database migration not needed)
  * */
-@Database(entities = {Restaurant.class}, version = 1, exportSchema = false)
+@Database(entities = {RestaurantEntity.class}, version = 1, exportSchema = false)
 public abstract class RestaurantRoomDatabase extends RoomDatabase {
 
-    /*
-     * all the DAOs that work with the database come here;
-     * Here, wordDao() works like a 'getter' for the DAO
-     * */
     public abstract RestaurantDao restaurantDao();
+    public abstract RestaurantImageDao restaurantImagesDao();
+    public abstract CommentDao CommentDao();
 
     /*
      * Making the database singleton so that there is only one instance of Room database.
@@ -38,13 +38,7 @@ public abstract class RestaurantRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (RestaurantRoomDatabase.class) {
                 if (INSTANCE == null) {
-                    // database creation goes here
-
-                    /*
-                     * use databaseBuilder() to build Room database named "word_database".
-                     * It uses destructive database migration (if database schema is changed, destroy and recreate database)
-                     * Destructive migration is not preferred in real world apps
-                     * */
+                    
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RestaurantRoomDatabase.class, "restaurant_database")
                             .fallbackToDestructiveMigration()
                             .build();

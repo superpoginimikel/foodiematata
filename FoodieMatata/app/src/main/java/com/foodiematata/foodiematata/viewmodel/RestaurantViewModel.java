@@ -3,7 +3,7 @@ package com.foodiematata.foodiematata.viewmodel;
 import android.app.Application;
 
 import com.foodiematata.foodiematata.RestaurantRepository;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,7 +18,7 @@ import java.util.List;
 public class RestaurantViewModel extends AndroidViewModel {
 
     private RestaurantRepository mRepository;
-    private LiveData<List<Restaurant>> restaurants;
+    private LiveData<List<RestaurantEntity>> restaurants;
 
     /*
     * constructor; gets reference to WordRepository and gets list of all words from the repository
@@ -33,23 +33,15 @@ public class RestaurantViewModel extends AndroidViewModel {
     * "getter" methods to get all the words from the repository and insert words into the database;
     *This hides implementation from the UI
     * */
-    public LiveData<List<Restaurant>> getAllRestaurants() {
+    public LiveData<List<RestaurantEntity>> getAllRestaurants() {
         return restaurants;
     }
 
-    public Restaurant getRestaurantById(int id)  {
-        return mRepository.getRestaurantById(id);
-    }
-
-    public void insert(Restaurant restaurant) {
+    public void insert(RestaurantEntity restaurant) {
         mRepository.insert(restaurant);
     }
 
     public void deleteAll(){
         mRepository.deleteAll();
-    }
-
-    public void deleteWord(Restaurant restaurant) {
-        mRepository.deleteWord(restaurant);
     }
 }

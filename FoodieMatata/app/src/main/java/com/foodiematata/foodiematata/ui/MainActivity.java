@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.foodiematata.foodiematata.R;
+import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
 import com.foodiematata.foodiematata.viewmodel.RestaurantViewModel;
-import com.foodiematata.foodiematata.db.entity.Restaurant;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    // all activity interactions with viewModel only
     private RestaurantViewModel mRestaurantViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -33,19 +32,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // RecyclerView setup
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final RestaurantMainListAdapter adapter = new RestaurantMainListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // ViewModel and liveData code
-        // ViewModelProviders are used to associate viewModel with UI controller
         mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
-        mRestaurantViewModel.getAllRestaurants().observe(this, new Observer<List<Restaurant>>() {
+        mRestaurantViewModel.getAllRestaurants().observe(this, new Observer<List<RestaurantEntity>>() {
             @Override
-            public void onChanged(List<Restaurant> restaurants) {
-                // update cached copy of words
+            public void onChanged(List<RestaurantEntity> restaurants) {
                 adapter.setRestaurant(restaurants);
             }
         });
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -88,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             String price = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_PRICE);
 
             String imageFilePath = data.getStringExtra(NewRestaurantActivity.EXTRA_REPLY_IMAGE);
-            Restaurant restaurant = new Restaurant(name, location, phone, price, category, null, imageFilePath);
+            RestaurantEntity restaurant = new RestaurantEntity(name, location, phone, price, category, null, imageFilePath);
             mRestaurantViewModel.insert(restaurant);
         } else {
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
