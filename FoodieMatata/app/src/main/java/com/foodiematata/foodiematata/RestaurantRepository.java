@@ -30,6 +30,8 @@ public class RestaurantRepository {
     public RestaurantRepository(Application application){
         RestaurantRoomDatabase db = RestaurantRoomDatabase.getDatabase(application);
         restaurantDao = db.restaurantDao();
+        restaurantImageDao = db.restaurantImagesDao();
+        commentDao = db.commentDao();
         restaurants = restaurantDao.getAllRestaurants();
     }
 

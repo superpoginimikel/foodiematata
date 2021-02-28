@@ -14,6 +14,7 @@ import com.foodiematata.foodiematata.db.entity.RestaurantEntity;
 import com.foodiematata.foodiematata.db.entity.RestaurantImagesEntity;
 import com.foodiematata.foodiematata.viewmodel.RestaurantInfoViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     private ImageView imagePreview1;
     private ImageView imagePreview2;
     private ImageView imagePreview3;
-    private List<ImageView> imagePreviews;
+    private List<ImageView> imagePreviews = new ArrayList<ImageView>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
